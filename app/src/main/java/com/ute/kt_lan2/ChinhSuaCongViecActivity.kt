@@ -1,20 +1,22 @@
 package com.ute.kt_lan2
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.ute.kt_lan2.databinding.ActivityChinhSuaCongViecBinding
 
 class ChinhSuaCongViecActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityChinhSuaCongViecBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_chinh_sua_cong_viec)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityChinhSuaCongViecBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val tenCu = intent.getStringExtra("EXTRA_TEN_CU") ?: ""
+        val moTaCu = intent.getStringExtra("EXTRA_MO_TA_CU") ?: ""
+
+        binding.edtSuaTenCongViec.setText(tenCu)
+        binding.edtSuaMoTa.setText(moTaCu)
     }
 }
