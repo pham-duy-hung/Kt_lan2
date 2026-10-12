@@ -11,5 +11,11 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChiTietCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val tenCongViec = intent.getStringExtra("EXTRA_TEN_CV") ?: ""
+        val moTa = intent.getStringExtra("EXTRA_MO_TA") ?: ""
+
+        binding.tvTenCongViecChiTiet.text = "Ten cong viec: $tenCongViec"
+        binding.tvMoTaChiTiet.text = "Mo ta: $moTa"
     }
 }
