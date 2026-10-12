@@ -28,7 +28,7 @@ class ChinhSuaCongViecActivity : AppCompatActivity() {
                 putExtra("EXTRA_MO_TA_MOI", moTaMoi)
             }
             setResult(RESULT_OK, resultIntent)
-            finish() 
+            finish()
         }
     }
 }

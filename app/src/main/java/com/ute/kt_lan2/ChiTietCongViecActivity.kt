@@ -15,6 +15,18 @@ class ChiTietCongViecActivity : AppCompatActivity() {
     private val editLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data
+            val tenMoi = data?.getStringExtra("EXTRA_TEN_MOI") ?: ""
+            val moTaMoi = data?.getStringExtra("EXTRA_MO_TA_MOI") ?: ""
+
+            // Cập nhật lại giá trị và hiển thị lên UI
+            tenHienTai = tenMoi
+            moTaHienTai = moTaMoi
+
+            binding.tvTenCongViecChiTiet.text = "Ten cong viec: $tenHienTai"
+            binding.tvMoTaChiTiet.text = "Mo ta: $moTaHienTai"
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
