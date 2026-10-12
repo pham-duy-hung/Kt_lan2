@@ -2,6 +2,7 @@ package com.ute.kt_lan2
 
 import android.os.Bundle
 import android.content.Intent
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.ute.kt_lan2.databinding.ActivityChinhSuaCongViecBinding
 
@@ -15,26 +16,34 @@ class ChinhSuaCongViecActivity : AppCompatActivity() {
         binding = ActivityChinhSuaCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val options = arrayOf("Thấp", "Trung bình", "Cao")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, options)
+        binding.spinnerMucDo.adapter = adapter
+
         congViecCu = intent.getSerializableExtra("EXTRA_CONG_VIEC_CU") as? CongViec
 
         congViecCu?.let {
             binding.edtSuaTenCongViec.setText(it.tenCongViec)
             binding.edtSuaMoTa.setText(it.moTa)
+            val spinnerPosition = adapter.getPosition(it.mucDoUuTien)
+            binding.spinnerMucDo.setSelection(spinnerPosition)
         }
 
         binding.btnLuu.setOnClickListener {
             val tenMoi = binding.edtSuaTenCongViec.text.toString().trim()
             val moTaMoi = binding.edtSuaMoTa.text.toString().trim()
+            val mucDoMoi = binding.spinnerMucDo.selectedItem.toString() // Lấy giá trị mức độ ưu tiên được chọn
 
-            if (tenMoi.isEmpty()) {
-                binding.edtSuaTenCongViec.error = "Ten cong viec khong duoc de trống!"
+            if (tenMoi.isBlank()) {
+                binding.edtSuaTenCongViec.error = "Ten cong viec khong duoc de trong!"
                 return@setOnClickListener
             }
 
             val congViecMoi = congViecCu?.apply {
                 tenCongViec = tenMoi
                 moTa = moTaMoi
-            } ?: CongViec(tenMoi, moTaMoi, false)
+                mucDoUuTien = mucDoMoi
+            } ?: CongViec(tenMoi, moTaMoi, false, mucDoMoi)
 
             val resultIntent = Intent().apply {
                 putExtra("EXTRA_CONG_VIEC_MOI", congViecMoi)

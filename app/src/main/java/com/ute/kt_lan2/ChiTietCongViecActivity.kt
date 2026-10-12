@@ -49,6 +49,8 @@ class ChiTietCongViecActivity : AppCompatActivity() {
             binding.tvTenCongViecChiTiet.text = "Ten cong viec: ${it.tenCongViec}"
             binding.tvMoTaChiTiet.text = "Mo ta: ${it.moTa}"
             binding.cbTrangThai.isChecked = it.trangThai
+            binding.tvMucDoChiTiet.text = "Muc do uu tien: ${it.mucDoUuTien}"
         }
     }
+
 }
