@@ -23,10 +23,14 @@ class ChinhSuaCongViecActivity : AppCompatActivity() {
         }
 
         binding.btnLuu.setOnClickListener {
-            val tenMoi = binding.edtSuaTenCongViec.text.toString()
-            val moTaMoi = binding.edtSuaMoTa.text.toString()
+            val tenMoi = binding.edtSuaTenCongViec.text.toString().trim()
+            val moTaMoi = binding.edtSuaMoTa.text.toString().trim()
 
-            // Cập nhật lại thông tin cho đối tượng CongViec
+            if (tenMoi.isEmpty()) {
+                binding.edtSuaTenCongViec.error = "Ten cong viec khong duoc de trống!"
+                return@setOnClickListener
+            }
+
             val congViecMoi = congViecCu?.apply {
                 tenCongViec = tenMoi
                 moTa = moTaMoi
