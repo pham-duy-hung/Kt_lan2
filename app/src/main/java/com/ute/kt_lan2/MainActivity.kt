@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnTaoCongViec.setOnClickListener {
             val ten = binding.edtTenCongViec.text.toString()
             val moTa = binding.edtMoTa.text.toString()
-
+            if (ten.isEmpty()) {
+                binding.edtTenCongViec.error = "Ten cong viec khong duoc de trong!"
+                return@setOnClickListener
+            }
             val congViec = CongViec(ten, moTa, false)
 
             val intent = Intent(this, ChiTietCongViecActivity::class.java).apply {
