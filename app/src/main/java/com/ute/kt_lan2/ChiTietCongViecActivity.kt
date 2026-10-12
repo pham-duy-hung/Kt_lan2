@@ -30,8 +30,11 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         congViecHienTai = intent.getSerializableExtra("EXTRA_CONG_VIEC") as? CongViec
-
         hienThiThongTin()
+
+        binding.cbTrangThai.setOnCheckedChangeListener { _, isChecked ->
+            congViecHienTai?.trangThai = isChecked
+        }
 
         binding.btnChinhSua.setOnClickListener {
             val intent = Intent(this, ChinhSuaCongViecActivity::class.java).apply {
@@ -45,6 +48,7 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         congViecHienTai?.let {
             binding.tvTenCongViecChiTiet.text = "Ten cong viec: ${it.tenCongViec}"
             binding.tvMoTaChiTiet.text = "Mo ta: ${it.moTa}"
+            binding.cbTrangThai.isChecked = it.trangThai
         }
     }
 }
