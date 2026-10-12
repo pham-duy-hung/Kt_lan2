@@ -1,20 +1,15 @@
 package com.ute.kt_lan2
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
+import com.ute.kt_lan2.databinding.ActivityChiTietCongViecBinding
 class ChiTietCongViecActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityChiTietCongViecBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_chi_tiet_cong_viec)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityChiTietCongViecBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }
