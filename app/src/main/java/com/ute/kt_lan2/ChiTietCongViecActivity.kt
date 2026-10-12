@@ -9,23 +9,18 @@ import com.ute.kt_lan2.databinding.ActivityChiTietCongViecBinding
 class ChiTietCongViecActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChiTietCongViecBinding
-    private var tenHienTai = ""
-    private var moTaHienTai = ""
+    private var congViecHienTai: CongViec? = null
 
     private val editLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val data = result.data
-            val tenMoi = data?.getStringExtra("EXTRA_TEN_MOI") ?: ""
-            val moTaMoi = data?.getStringExtra("EXTRA_MO_TA_MOI") ?: ""
-
-            // Cập nhật lại giá trị và hiển thị lên UI
-            tenHienTai = tenMoi
-            moTaHienTai = moTaMoi
-
-            binding.tvTenCongViecChiTiet.text = "Ten cong viec: $tenHienTai"
-            binding.tvMoTaChiTiet.text = "Mo ta: $moTaHienTai"
+            val congViecMoi = data?.getSerializableExtra("EXTRA_CONG_VIEC_MOI") as? CongViec
+            if (congViecMoi != null) {
+                congViecHienTai = congViecMoi
+                hienThiThongTin()
+            }
         }
     }
 
@@ -34,18 +29,22 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         binding = ActivityChiTietCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        tenHienTai = intent.getStringExtra("EXTRA_TEN_CONG_VIEC") ?: ""
-        moTaHienTai = intent.getStringExtra("EXTRA_MO_TA") ?: ""
+        congViecHienTai = intent.getSerializableExtra("EXTRA_CONG_VIEC") as? CongViec
 
-        binding.tvTenCongViecChiTiet.text = "Ten cong viec: $tenHienTai"
-        binding.tvMoTaChiTiet.text = "Mo ta: $moTaHienTai"
+        hienThiThongTin()
 
         binding.btnChinhSua.setOnClickListener {
             val intent = Intent(this, ChinhSuaCongViecActivity::class.java).apply {
-                putExtra("EXTRA_TEN_CU", tenHienTai)
-                putExtra("EXTRA_MO_TA_CU", moTaHienTai)
+                putExtra("EXTRA_CONG_VIEC_CU", congViecHienTai)
             }
             editLauncher.launch(intent)
+        }
+    }
+
+    private fun hienThiThongTin() {
+        congViecHienTai?.let {
+            binding.tvTenCongViecChiTiet.text = "Ten cong viec: ${it.tenCongViec}"
+            binding.tvMoTaChiTiet.text = "Mo ta: ${it.moTa}"
         }
     }
 }

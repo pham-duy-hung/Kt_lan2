@@ -18,13 +18,13 @@ class MainActivity : AppCompatActivity() {
         binding.tvMaSinhVien.text = "Ma sinh vien: 2415053122116"
         binding.tvLopHp.text = "Lop HP: 126LTDTDĐ01"
         binding.btnTaoCongViec.setOnClickListener {
-            val tenCongViec = binding.edtTenCongViec.text.toString()
+            val ten = binding.edtTenCongViec.text.toString()
             val moTa = binding.edtMoTa.text.toString()
 
-            // Tao Intent chuyen sang ChiTietCongViecActivity va truyen du lieu
+            val congViec = CongViec(ten, moTa, false)
+
             val intent = Intent(this, ChiTietCongViecActivity::class.java).apply {
-                putExtra("EXTRA_TEN_CV", tenCongViec)
-                putExtra("EXTRA_MO_TA", moTa)
+                putExtra("EXTRA_CONG_VIEC", congViec)
             }
             startActivity(intent)
         }

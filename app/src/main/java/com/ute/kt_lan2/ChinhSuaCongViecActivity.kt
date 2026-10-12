@@ -8,24 +8,32 @@ import com.ute.kt_lan2.databinding.ActivityChinhSuaCongViecBinding
 class ChinhSuaCongViecActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChinhSuaCongViecBinding
+    private var congViecCu: CongViec? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChinhSuaCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val tenCu = intent.getStringExtra("EXTRA_TEN_CU") ?: ""
-        val moTaCu = intent.getStringExtra("EXTRA_MO_TA_CU") ?: ""
+        congViecCu = intent.getSerializableExtra("EXTRA_CONG_VIEC_CU") as? CongViec
 
-        binding.edtSuaTenCongViec.setText(tenCu)
-        binding.edtSuaMoTa.setText(moTaCu)
+        congViecCu?.let {
+            binding.edtSuaTenCongViec.setText(it.tenCongViec)
+            binding.edtSuaMoTa.setText(it.moTa)
+        }
+
         binding.btnLuu.setOnClickListener {
             val tenMoi = binding.edtSuaTenCongViec.text.toString()
             val moTaMoi = binding.edtSuaMoTa.text.toString()
 
+            // Cập nhật lại thông tin cho đối tượng CongViec
+            val congViecMoi = congViecCu?.apply {
+                tenCongViec = tenMoi
+                moTa = moTaMoi
+            } ?: CongViec(tenMoi, moTaMoi, false)
+
             val resultIntent = Intent().apply {
-                putExtra("EXTRA_TEN_MOI", tenMoi)
-                putExtra("EXTRA_MO_TA_MOI", moTaMoi)
+                putExtra("EXTRA_CONG_VIEC_MOI", congViecMoi)
             }
             setResult(RESULT_OK, resultIntent)
             finish()
