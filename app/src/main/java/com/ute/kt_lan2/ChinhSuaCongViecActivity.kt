@@ -32,10 +32,11 @@ class ChinhSuaCongViecActivity : AppCompatActivity() {
         binding.btnLuu.setOnClickListener {
             val tenMoi = binding.edtSuaTenCongViec.text.toString().trim()
             val moTaMoi = binding.edtSuaMoTa.text.toString().trim()
-            val mucDoMoi = binding.spinnerMucDo.selectedItem.toString() // Lấy giá trị mức độ ưu tiên được chọn
+            val mucDoMoi = binding.spinnerMucDo.selectedItem.toString()
 
             if (tenMoi.isBlank()) {
-                binding.edtSuaTenCongViec.error = "Ten cong viec khong duoc de trong!"
+                binding.edtSuaTenCongViec.error = "Ten cong viec khong duoc de trong hoac chua toan khoang trang!"
+                binding.edtSuaTenCongViec.requestFocus()
                 return@setOnClickListener
             }
 
